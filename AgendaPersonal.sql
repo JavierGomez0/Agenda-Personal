@@ -3,12 +3,12 @@ create database agenda_personal;
 use agenda_personal;
  
 create table Contactos(
-	codigoContactos integer auto_increment,
+	codigo_contactos integer auto_increment,
     nombre varchar (64),
     apellido varchar (64),
     telefono varchar (16),
     correo varchar (128),
-    constraint pk_contacto primary key (codigoContactos)
+    constraint pk_contacto primary key (codigo_contactos)
 );
  
  
