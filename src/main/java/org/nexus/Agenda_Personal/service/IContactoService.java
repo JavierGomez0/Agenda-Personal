@@ -5,8 +5,10 @@ import java.util.List;
 
 public interface IContactoService {
     public List<Contacto> listraContactos();
-    public Contacto buscarContactoPorId (Integer codigo);
+    public Contacto buscarContactoPorId (Integer codigo_contactos);
     public Contacto buscarContactoPorNombre (String nombre);
-    public void guardarContacto (Contacto contacto);
+    public Contacto guardarContacto (Contacto contacto);
     public void eliminarContacto (Contacto contacto);
 }
+
+

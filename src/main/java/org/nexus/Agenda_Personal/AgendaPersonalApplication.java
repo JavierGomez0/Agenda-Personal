@@ -36,7 +36,7 @@ public class AgendaPersonalApplication implements CommandLineRunner {
 	}
 
 	private void AgendaPersonalApp(){
-		logger.info("+++++Bienvenido a la aplicacion de Registro de Cliente++++");
+		logger.info("+++++Bienvenido a la aplicacion de Agensa de Contactos++++");
 		var salir = false;
 		var consola = new Scanner(System.in);
 		while (!salir){
@@ -51,9 +51,10 @@ public class AgendaPersonalApplication implements CommandLineRunner {
              ***Aplicacion***
              1. Listar contacto
              2. Buscar contacto
-             3. Modificar contacto
-             4. Eliminar contacto
-             5. Salir
+             3.Crear contacto
+             4. Modificar contacto
+             5. Eliminar contacto
+             6. Salir
              """);
 		var opcion = Integer.parseInt(consola.nextLine());
 		return opcion;
@@ -70,60 +71,66 @@ public class AgendaPersonalApplication implements CommandLineRunner {
 
 			case 2 -> {
 				logger.info(salto + "***Buscar contacto por su nombre***" + salto);
-				String nombre = consola.nextLine();
-				Contacto contacto = contactoService.buscarContactoPorNombre(nombre);
-				if (contacto != null) {
-					logger.info("Contacto encontrado: " + contacto.getNombre() + salto);
-				} else {
-					logger.info("Contacto no encontrado" + salto);
-				}
-			}
-
+                logger.info("Ingrese el nombre a buscar: ");
+                String nombre = consola.nextLine();
+                Contacto contacto = contactoService.buscarContactoPorNombre(nombre);
+                if (contacto != null) {
+                    logger.info("Contacto encontrado: " + contacto + salto);
+                } else {
+                    logger.info("Contacto no encontrado" + salto);
+                }
+            }
 
 			case 3 -> {
-				//Buscar por codigo
-				logger.info("Agregue el codigo del contacto a modificar");
-				var codigo = Integer.parseInt(consola.nextLine());
-				Contacto cliente = contactoService.buscarContactoPorId(codigo);
-				//Guardar si no es null
-				if (cliente != null){
-					logger.info("Ingrese el nombre del cliente a agregar: ");
-					var nombre = consola.nextLine();
-					logger.info("Ingrese el apellido del cliente a agregar: ");
-					var apellido = consola.nextLine();
-					logger.info("Ingrese el telefono del cliente a agregar: ");
-					var telefono = consola.nextLine();
-					logger.info("Ingrese el correo del cliente a agregar: ");
-					var correo = consola.nextLine();
-					logger.info("Ingrese el genero del cliente a agregar: ");
-					var genero = consola.nextLine();
-					logger.info("Ingrese la edad del cliente a agregar: ");
-					var edad = Integer.parseInt(consola.nextLine());
-					cliente.setNombre(nombre);
-					cliente.setApellido(apellido);
-					cliente.setTelefono(telefono);
-					cliente.setCorreo(correo);
-					cliente.setGenero(genero);
-					cliente.setEdad(edad);
-					clienteService.guardarCliente(cliente);
-					logger.info("Cliente modificado con exito: " + cliente+salto);
-				} else {
-					logger.info("Cliente no encontrado");
-				}
-			}
+                logger.info(salto + "*** Crear nuevo contacto ***" + salto);
+                Contacto contacto = new Contacto( );
+                logger.info("Ingrese el nombre: ");
+                contacto.setNombre(consola.nextLine());
+                logger.info("Ingrese el apellido: ");
+                contacto.setApellido(consola.nextLine());
+                logger.info("Ingrese el teléfono: ");
+                contacto.setTelefono(consola.nextLine());
+                logger.info("Ingrese el correo: ");
+                contacto.setCorreo(consola.nextLine());
+                contactoService.guardarContacto(contacto);
+                logger.info("Contacto creado con éxito: " + contacto + salto);
+            }
+
 			case 4 -> {
-				logger.info(salto + "***Eliminar Cliente***"+salto);
-				logger.info("Ingrese el codigo del cliente a eliminar");
-				var codigo = Integer.parseInt(consola.nextLine());
-				var cliente = clienteService.buscarClientePorId(codigo);
-				if (cliente !=null){
-					clienteService.eliminarCliente(cliente);
-					logger.info("Cliente eliminado, adiosito");
-				} else {
-					logger.info("Cliente no encontrado " +cliente+salto);
-				}
-			}
-			case 5 -> {
+                logger.info(salto + "*** Modificar contacto ***" + salto);
+                logger.info("Ingrese el código del contacto a modificar: ");
+                int codigo = Integer.parseInt(consola.nextLine());
+                Contacto contacto = contactoService.buscarContactoPorId(codigo);
+                if (contacto != null){
+                    logger.info("Ingrese el nuevo nombre: ");
+                    contacto.setNombre(consola.nextLine());
+                    logger.info("Ingrese el nuevo apellido: ");
+                    contacto.setApellido(consola.nextLine());
+                    logger.info("Ingrese el nuevo teléfono: ");
+                    contacto.setTelefono(consola.nextLine());
+                    logger.info("Ingrese el nuevo correo: ");
+                    contacto.setCorreo(consola.nextLine());
+                    contactoService.guardarContacto(contacto);
+                    logger.info("Contacto modificado con éxito: " + contacto + salto);
+                } else {
+                    logger.info("Contacto no encontrado" + salto);
+                }
+            }
+
+            case 5 -> {
+                logger.info(salto + "*** Eliminar contacto ***" + salto);
+                logger.info("Ingrese el código del contacto a eliminar: ");
+                int codigo = Integer.parseInt(consola.nextLine());
+                Contacto contacto = contactoService.buscarContactoPorId(codigo);
+                if (contacto != null){
+                    contactoService.eliminarContacto(contacto);
+                    logger.info("Contacto eliminado con éxito." + salto);
+                } else {
+                    logger.info("Contacto no encontrado" + salto);
+                }
+            }
+
+			case 6 -> {
 				logger.info("Hasta la vista, Beibi" + salto + salto);
 				salir = true;
 			}
