@@ -1,4 +1,8 @@
 package org.nexus.Agenda_Personal.repository;
 
-public interface ContactoRepository {
+import org.nexus.Agenda_Personal.entity.Contacto;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ContactoRepository extends JpaRepository<Contacto, Integer>{
+    <T> ScopedValue<T> findByNombre(String nombre);
 }
