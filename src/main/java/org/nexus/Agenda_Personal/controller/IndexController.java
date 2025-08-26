@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.jsf.FacesContextUtils;
 //import jakarta.faces.view.ViewScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
+
 
 import java.util.List;
 
@@ -38,41 +42,32 @@ public class IndexController {
                 this.contactos.forEach(contacto -> logger.info(contacto.toString()));
             }
 
-            public void agregarContacto(){
-                this.contactoSeleccionado = new Contacto();
-            }
+    public void guardarContacto(){
+        logger.info("Contacto a guardar: " + this.contactoSeleccionado);
+        //Agregar
+        if (this.contactoSeleccionado.getCodigoContactos() ==null){
+            this.contactoService.guardarContacto(this.contactoSeleccionado);
+            this.contactos.add(this.contactoSeleccionado);
+        }
+        //Modificar
+        else {
+            this.contactoService.guardarContacto(this.contactoSeleccionado);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contacto actualizado"));
+        }
+        PrimeFaces.current().executeScript("PF('ventanaModalContacto').hide()");
+        PrimeFaces.current().ajax().update("formulario-contactos:mensaje-emergente","formulario-contactos:tabla-contactos");
+        this.contactoSeleccionado = null;
+    }
 
-            public void guardarCliente(){
-                logger.info("Contacto a guardar" + this.contactoSeleccionado);
-                if (this.contactoSeleccionado.getCodigoContactos() ==null){
-                    this.contactoService.guardarContacto(this.contactoSeleccionado);
-                    this.contactos.add(this.contactoSeleccionado);
-                    FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("contacto agrgado"));
-                }
-                else{
-                    this.contactoService.guardarContacto(this.contactoSeleccionado);
-                    FacesContext.getCurrentInstance().addMesaage(null, new FacesMessage(cliente actualizado));
-                }
-                //ocultar la ventana modal
-                PrimeFaces.current().executeScript("PF('ventanaModalContacto').show()");
+    public void eliminarPaciente(){
+        logger.info("Contacto a eliminar: " + this.contactoSeleccionado);
+        this.contactoService.eliminarContacto(this.contactoSeleccionado);
+        this.contactos.remove(this.contactoSeleccionado);
+        this.contactoSeleccionado = null;
+        FacesContext.getCurrentInstance().addMessage(
+                null, new FacesMessage("Contacto eliminado"));
+        PrimeFaces.current().ajax().update("formulario-contactos:mensaje-emergente",
+                "formulario-contactos:tabla-contactos");
 
-                //Actualizar tabla utilizando tecnología incorporada - AJAX -
-                PrimeFaces.current().ajax().update("formulario-contacto:mensaje-emergente", "formulario-contacto:tabla-contacto");
-
-                //Limpiar el objeto cliente seleccionado
-                this.clienteSeleccionado = null;
-            }
-                 public void eliminarCliente(){
-                 logger.info("Cliente a eliminar: " + this.contactoSeleccionado);
-                    this.contactoService.eliminarContacto(this.contactoSeleccionado);
-
-                    //Eliminar el registro de la lista de clientes
-                  this.contactos.remove(this.contactoSeleccionado);
-
-                    //Reiniciar el objeto cliente seleccionado
-                     this.contactoSeleccionado = null;
-
-                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contacto eliminado"));
-                     PrimeFaces.current().ajax().update("formulario-contacto:mensaje-emergente", "formulario-contacto:tabla-contacto");
     }
 }
