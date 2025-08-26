@@ -4,8 +4,74 @@
         xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Registro cliente</title>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/primeone-dark.css"/>
     </h:head>
     <h:body>
-        <h:outputText value="Hola mundo desde JSF"/>
+        <p>hola mundo desde jsf</p>
+        <div class="card">
+            <h:form id="formulario-contacto">
+                <p:growl id="mensaje-emergente" showDetails="true"/>
+                <div class="card">
+                    <p:menubar>
+                        <p:menuitem value="Inicio"
+                                    update=":formulario-contacto:tabla-contacto"
+                                    actionListener="#{indexController.cargarDatos}"/>
+                        <p:menuitem value="nuevo contacto" icon="pi pi-fw pi-plus" actionListener="#{indexController.agregarContacto}"
+                                    update=":formulario-contacto:ventana-contacto @this"
+                                    oncomplete="PF('ventanaModalContacto').show()"/>
+                    </p:menubar>
+                </div>
+                <div class="card">
+                    <p:dataTable value="#{indexController.contactos}" var="contacto" id="tabla-contacto" widgetVar="contactoTabla">
+                        <f:facet name="header">
+                            <div class="flex justify-content-center flex-wrap card-container yellow-container">
+                                <div class="flex align-items-center justify-content-center w-20rem h-4rem bg-yellow-500 font-bold m-2 text-gray-900 border-round">
+                                    <h3>Registro de contactos Nexus</h3>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:column headerText="ID">
+                            <h:outputText value="#{contacto.codigo_contactos}"/>
+                        </p:column>
+                        <p:column headerText="nombre">
+                            <h:outputText value="#{contacto.nombre}"/>
+                        </p:column>
+                        <p:column headerText="apellido">
+                            <h:outputText value="#{contacto.apellido}"/>
+                        </p:column>
+                        <p:column headerText="telefono">
+                            <h:outputText value="#{contacto.telefono}"/>
+                        </p:column>
+                        <p:column headerText="correo">
+                            <h:outputText value="#{contacto.correo}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+        <div class="card">
+            <h:form id="formulario-modal">
+                <p:dialog header="Detalle Contacto" showEffect="fade" modal="true" widgetVar="ventanaModalContacto" responsive="true">
+                    <p:outputPanel id="ventana-contacto" class="ui-fluid">
+                        <div class="field">
+                            <p:outputLabel for="nombre">Nombre</p:outputLabel>
+                            <p:inputText id="nombre" required="true" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="apellido">Apellido</p:outputLabel>
+                            <p:inputText id="apellido" required="true" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="telefono">Telefono</p:outputLabel>
+                            <p:inputText id="telefono" required="true" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="correo">Correo</p:outputLabel>
+                            <p:inputText id="correo" required="true" />
+                        </div>
+                    </p:outputPanel>
+                </p:dialog>
+            </h:form>
+        </div>
     </h:body>
 </h:html>
