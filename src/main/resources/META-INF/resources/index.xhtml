@@ -1,120 +1,26 @@
 <!DOCTYPE html>
-<h:html xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:f="http://xmlns.jcp.org/jsf/core"
-        xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Registro cliente</title>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<head>
+        <title>Registro Contacto</title>
         <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
         <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/primeone-dark.css"/>
-    </h:head>
-    <h:body>
-        <p>Hola Mundo, estoy con jsf</p>
-        <div class="card">
-            <h:form id="formulario-contactos">
-                <p:growl id="mensaje-emergente" showDetails="true"/>
-                <!--                barra de menu-->
-                <div class="card">
-                    <p:menubar>
-                        <!--                        boton de actualizar-->
-                        <p:menuitem value="Inicio" icon="pi pi-fw pi-user"
-                                    update=":formulario-contactos:tabla-contactos"
-                                    actionListener="#{indexController.cargarDatos}"/>
-                        <!--                        boton para agregar un nuevo Contacto-->
-                        <p:menuitem value="Nuevo Contacto" icon="pi pi-fw pi-plus"
-                                    actionListener="#{indexController.agregarContacto}"
-                                    update=":formulario-modal:ventana-contacto @this"
-                                    oncomplete="PF('ventanaModalContacto').show()"/>
-                    </p:menubar>
-                </div>
-                <!--            tabla de contactos-->
-                <div class="card">
-                    <p:dataTable value="#{indexController.contactos}" var="contactos"
-                                 id="tabla-contactos" widgetVar="contactosTabla">
-                        <f:facet name="header">
-                            <div class="flex justify-content-center flex-wrap
-                                        card-container yellow -container">
-                                <div class="flex align-items-center justify-content-center
-                                            w-20rem h4rem bg-yellow-500 font-bold m-2
-                                            text-gray-900 border-round">
-                                    <h3>Registro de Contactos nexus</h3>
-                                </div>
-                            </div>
-                        </f:facet>
+</head>
+<body>
+<h1 align="center">Registro Contacto</h1>
+<h1 align="center">Este es la pagina principal de Contactos </h1>
+<p >Este es el boton para ir a la tabla Contactos </p>
+<p:button value="Ir a Registro Contacto"
+          outcome="crud.xhtml"
+          icon="pi pi-pencil"
+          style="margin-right:.5rem"/>
 
-                        <p:column headerText="ID">
-                            <h:outputText value="#{contactos.codigo_contactos}"/>
-                        </p:column>
-                        <p:column headerText="Nombre">
-                            <h:outputText value="#{contactos.nombre}"/>
-                        </p:column>
-                        <p:column headerText="Apellido">
-                            <h:outputText value="#{contactos.apellido}"/>
-                        </p:column>
-                        <p:column headerText="Telefono">
-                            <h:outputText value="#{contactos.telefono}"/>
-                        </p:column>
-                        <p:column headerText="Correo">
-                            <h:outputText value="#{contactos.correo}"/>
-                        </p:column>
-                        <p:column>
-                            <p:commandButton value="Editar" icon="pi pi-pencil"
-                                             update=":formulario-modal:ventana-contacto"
-                                             process="@this"
-                                             oncomplete="PF('ventanaModalContacto').show()"
-                                             class="ui-button-primary"
-                                             style="margin-right:.5rem">
-                                <f:setPropertyActionListener
-                                        value="#{contactos}"
-                                        target="#{indexController.contactoSeleccionado}"/>
-                            </p:commandButton>
-                            <p:commandButton value="Eliminar" icon="pi pi-trash"
-                                             class="ui-button-danger">
+<p >Este es el boton para ir a la lista de Contactos </p>
+<p:button value="Ir a la lista Contacto"
+          outcome="contacto.xhtml"
+          icon="pi pi-pencil"
+          style="margin-right:.5rem"/>
 
-                            </p:commandButton>
-                        </p:column>
-
-                    </p:dataTable>
-                </div>
-
-            </h:form>
-            <h:form id="formulario-modal">
-                <p:dialog header="Detalle Contactos" showEffect="fade" modal="true" widgetVar="ventanaModalContacto" responsive="true">
-                    <p:outputPanel id="ventana-contacto" class="ui-fluid">
-                        <div class="field">
-                            <p:outputLabel for="nombre">Nombre</p:outputLabel>
-                            <p:inputText id="nombre"
-                                         value="#{indexController.contactoSeleccionado.nombre}"
-                                         required="true" />
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="apellido">Apellido</p:outputLabel>
-                            <p:inputText id="apellido"
-                                         value="#{indexController.contactoSeleccionado.apellido}"
-                                         required="true" />
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="telefono">Telefono</p:outputLabel>
-                            <p:inputText id="telefono"
-                                         value="#{indexController.contactoSeleccionado.telefono}"
-                                         required="true" />
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="correo">Correo</p:outputLabel>
-                            <p:inputText id="correo"
-                                         value="#{indexController.contactoSeleccionado.correo}"
-                                         required="true" />
-                        </div>
-                    </p:outputPanel>
-                    <f:facet name="footer0">
-                        <p:commandButton value="Guardar" icon="pi pi-check"
-                                         process="ventana-contacto @this"
-                                         actionListener="#{indexController.guardarContacto}"/>
-                    </f:facet>
-
-                </p:dialog>
-
-            </h:form>
-            <!--            modal-->
-        </div>
-    </h:body>
-</h:html>
+</body>
+</html>

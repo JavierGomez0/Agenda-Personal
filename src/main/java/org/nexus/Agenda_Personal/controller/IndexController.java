@@ -41,7 +41,9 @@ public class IndexController {
                 this.contactos = this.contactoService.listraContactos();
                 this.contactos.forEach(contacto -> logger.info(contacto.toString()));
             }
-
+public void agregarContacto(){
+                this.contactoSeleccionado = new Contacto();
+}
     public void guardarContacto(){
         logger.info("Contacto a guardar: " + this.contactoSeleccionado);
         //Agregar
@@ -59,7 +61,7 @@ public class IndexController {
         this.contactoSeleccionado = null;
     }
 
-    public void eliminarPaciente(){
+    public void eliminarContacto(){
         logger.info("Contacto a eliminar: " + this.contactoSeleccionado);
         this.contactoService.eliminarContacto(this.contactoSeleccionado);
         this.contactos.remove(this.contactoSeleccionado);
